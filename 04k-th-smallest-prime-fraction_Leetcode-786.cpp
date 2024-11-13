@@ -18,30 +18,6 @@ public:
     }
 };
 
-class Solution {//m2
-public:
-    typedef pair<double, pair<int, int>> dip;
-    vector<int> kthSmallestPrimeFraction(vector<int>& arr, int k) { //t.c=O(n log n + k log n)
-        int n = arr.size();//s.c=O(n);
-        priority_queue<dip, vector<dip>, greater<dip>> pq;
-        // Push initial fractions arr[i] / arr[n-1] into the priority queue
-        for (int i = 0; i < n - 1; i++) pq.push({(double) arr[i] / arr[n-1], {i, n-1}});
-
-        // Extract the smallest fractions k-1 times
-        for (int i = 0; i < k - 1; i++) {
-            auto ele = pq.top();
-            pq.pop();
-            
-            // If there are more fractions with arr[ele.second.first]
-            if (ele.second.first < ele.second.second - 1) {
-                double fraction = (double) arr[ele.second.first] / arr[ele.second.second - 1];
-                pq.push({fraction, {ele.second.first, ele.second.second - 1}});
-            }
-        }
-        
-        return {arr[pq.top().second.first], arr[pq.top().second.second]};
-    }
-};
 
 int main() {
     Solution sol;
